@@ -1,0 +1,34 @@
+name: 构建博客
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * *' # 每天UTC午夜构建一次
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: 设置Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+    
+    - name: 安装依赖
+      run: |
+        npm install -g marked
+        
+    - name: 生成静态页面
+      run: |
+        # 这里可以添加更复杂的静态站点生成逻辑
+        echo "构建完成" > build.log
+        
+    - name: 部署到GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./

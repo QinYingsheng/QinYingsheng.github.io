@@ -27,8 +27,9 @@ jobs:
         # 这里可以添加更复杂的静态站点生成逻辑
         echo "构建完成" > build.log
         
-    - name: 部署到GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./
+    - name: Deploy to GitHub Pages
+  uses: peaceiris/actions-gh-pages@v3
+  with:
+    # 使用自动生成的GITHUB_TOKEN
+    github_token: ${{ secrets.GITHUB_TOKEN }}  # 这行是关键
+    publish_dir: ./public  # 修改为你的构建输出目录
